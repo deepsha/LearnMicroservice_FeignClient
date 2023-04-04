@@ -1,0 +1,13 @@
+feign API:-http://localhost:8083/shop/customers/76
+actual API:http://localhost:8081/customers/76
+
+
+feign API:-http://localhost:8083/shop/customers/76
+actual API:http://localhost:8082/products/category/Wellness Care
+
+Service name+Trace ID(same acroos all microservice)+Span Id(specific to single microservice)+export Flag
+
+--install zipkin at port 9411
+curl -ssl https://zipkin.io/quickstart.sh |bash -h
+java -jar zipkin.jar
+

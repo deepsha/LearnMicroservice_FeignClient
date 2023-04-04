@@ -1,0 +1,2 @@
+INSERT INTO ORDERED_ITEMS (CUSTOMER_ID, ORDERED_PRODUCTS, CUSTOMER_FIRST_NAME, CUSTOMER_LAST_NAME,CUSTOMER_ADDRESS, CUSTOMER_CONTACT, CUSTOMER_CITY, SHIPPING_ADDRESS,CUSTOMER_BILL,ORDERED_STATUS)
+VALUES ('99', '{"productId": 5,"productName": "Dark Coffee",    "productQuantity": 4,    "productPrice": 2.0,   "productWeight": "1"}', 'Katherine', 'Knight', '3 Surrey Circle', '6-(906)910-4569', 'LA','same as billing address','109','SUCCESS');
