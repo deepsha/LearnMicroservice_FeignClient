@@ -1,4 +1,4 @@
-package com.app.hotel.guestservice;
+package com.app.shop.productservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

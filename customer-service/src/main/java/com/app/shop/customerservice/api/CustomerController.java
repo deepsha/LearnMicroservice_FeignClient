@@ -18,52 +18,47 @@ import java.util.Optional;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
     private Logger logger = LoggerFactory.getLogger(CustomerController.class);
-    public CustomerController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
 
     @GetMapping
-    public Iterable<Customer> getCustomerByEmail(@RequestParam(value = "emailAddress", required = false) String emailAddress) {
+    public Customer getCustomerByEmail(@RequestParam(value = "emailAddress", required = false) String emailAddress) {
     	logger.info("within customer-service CustomerController getCustomerByEmail:");
-    	if (StringUtils.hasLength(emailAddress)) {
-            return this.customerRepository.findCustomersByEmailAddress(emailAddress);
-        }
-        return this.customerRepository.findAll();
+    	return customerService.getCustomerByEmail(emailAddress);    
+    }
+    @GetMapping("/country")
+    public Iterable<Customer> getCustomersByCountry(@RequestParam(value = "country", required = false) String country) {
+    	logger.info("within customer-service CustomerController getCustomersByCountry:"+country);
+    	return customerService.getCustomersByCountry(country);    
     }
 
-    @PostMapping
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public Customer addCustomer(@RequestBody Customer customer) {
-        return this.customerRepository.save(customer);
+        return  customerService.addCustomer(customer);  
     }
 
     @GetMapping("/{id}")
     public Customer getCustomer(@PathVariable("id") Long id) {
     	logger.info("within customer-service CustomerController getCustomer id:"+id);
-        Optional<Customer> customer = this.customerRepository.findById(id);
-        if (customer.isEmpty()) {
-            throw new NotFoundException("id not found: " + id);
-        }
-        return customer.get();
+    	return  customerService.getCustomer(id);      	
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customer) {
     	logger.info("within customer-service CustomerController updateCustomer:");
-    	if (id != customer.getCustomerId()) {
-            throw new BadReqeustException("incoming id in body doesn't match path");
-        }
-        this.customerRepository.save(customer);
+    	customerService.updateCustomer(id,customer);          	
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.RESET_CONTENT)
     public void deleteCustomer(@PathVariable("id") Long id) {
     	logger.info("within customer-service CustomerController deleteCustomer:");
-        this.customerRepository.deleteById(id);
+    	customerService.deleteCustomer(id);             
     }
 }
